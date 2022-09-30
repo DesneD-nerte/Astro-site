@@ -1,0 +1,26 @@
+---
+import PasswordMeter from "../../components/PasswordMeter.astro";
+import EmailInput from "../../components/EmailInput.astro";
+import ValidationButton from "../../components/ValidationButton.astro";
+import UsernameInput from "../UsernameInput.astro";
+
+export interface Props {
+  action: string;
+  buttonText: string;
+}
+
+const { action, buttonText } = Astro.props;
+---
+
+<form
+  id="form-enter"
+  class="d-flex flex-column flex-center form"
+  action={action}
+  method="post"
+  autocomplete="off"
+>
+  <EmailInput />
+  <UsernameInput />
+  <PasswordMeter />
+  <ValidationButton buttonText={buttonText} />
+</form>

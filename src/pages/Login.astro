@@ -3,5 +3,24 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Login Page">
-  <main></main>
+  <main>
+    <h1>Sign In</h1>
+    <form action="#" method="post">
+      <input placeholder="Username" />
+      <input placeholder="Email" type="email" />
+      <input placeholder="Password" type="password" />
+      <input placeholder="Sign In" type="submit" />
+    </form>
+
+    <button>Sign Up</button>
+  </main>
 </Layout>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

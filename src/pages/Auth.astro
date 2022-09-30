@@ -1,7 +1,13 @@
 ---
+import PasswordMeter from "../components/PasswordMeter.astro";
+import EmailInput from "../components/EmailInput.astro";
+import ValidationButton from "../components/ValidationButton.astro";
+import AuthForm from "../components/forms/AuthForm.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Auth Page">
-  <main></main>
+  <main class="d-flex flex-row flex-center">
+    <AuthForm action="#" buttonText="Register" />
+  </main>
 </Layout>
