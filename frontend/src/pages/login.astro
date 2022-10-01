@@ -1,8 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import LoginForm from "../components/forms/LoginForm.astro";
+
 ---
 
 <Layout title="Login Page">
+  <main class="d-flex flex-row flex-center">
+    <LoginForm buttonText="Sign in"/>
+  </main>
+</Layout>
+
+<!-- <Layout title="Login Page">
   <main>
     <h1>Sign In</h1>
     <form action="#" method="post">
@@ -23,4 +31,4 @@ import Layout from "../layouts/Layout.astro";
     justify-content: center;
     align-items: center;
   }
-</style>
+</style> -->

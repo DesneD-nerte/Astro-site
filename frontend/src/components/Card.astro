@@ -1,8 +1,10 @@
 ---
-export interface Props {
+export interface OneProduct {
 	title: string;
 	body: string;
 	href: string;
+	price: number;
+	images: string[];
 }
 
 const { href, title, body } = Astro.props;

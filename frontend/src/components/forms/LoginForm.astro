@@ -13,33 +13,36 @@ const { buttonText } = Astro.props;
 ---
 
 <form
-  id="form-enter-auth"
+  id="form-enter"
   class="d-flex flex-column flex-center form"
   autocomplete="off"
   onsubmit="return false"
 >
-  <UsernameInput />
   <EmailInput />
   <PasswordMeter />
   <ValidationButton buttonText={buttonText} />
 </form>
 
 <script>
-  function sendAuthData() {
-    const formData = new FormData(form);
+  function sendLoginData() {
+    const formData = new FormData();
 
-    fetch("http://localhost:1337/api/auth/local/register", {
+    const formElements = form.elements
+    const inputEmail = formElements[0] as HTMLInputElement;
+    const inputPassword = formElements[1] as HTMLInputElement;
+    
+    formData.append("identifier", inputEmail.value);
+    formData.append("password", inputPassword.value);
+
+    fetch("http://localhost:1337/api/auth/local", {
       method: "post",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(Object.fromEntries(formData))
+      body: formData
     })
     .then((response) => {
       return (response.json()
         .then((data) => {
           document.location.href = "/home"
-
+          
           localStorage.setItem("Authorization", data.jwt);
         })  
       );
@@ -47,8 +50,8 @@ const { buttonText } = Astro.props;
 
   };
 
-  const form = document.getElementById("form-enter-auth") as HTMLFormElement;
+  const form = document.getElementById("form-enter") as HTMLFormElement;
 
-  form.addEventListener("submit", sendAuthData, false);
+  form.addEventListener("submit", sendLoginData, false);
 
 </script>

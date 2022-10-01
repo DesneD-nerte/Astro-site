@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Card, { OneProduct } from "./Card.astro";
+
+const productsResponse = await fetch("http://localhost:1337/api/products?populate=*", {
+    method: "get",
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem("Authorization")
+    }
+})
+console.log(productsResponse);
+
+const data = await productsResponse.json();
+---
+
+<main>
+    <p>{JSON.stringify(data)}</p>
+    <!-- {data.map((oneProduct: OneProduct) => {
+        <Card title={oneProduct.title} price={oneProduct.price} body="Description" href={oneProduct.href}></Card>
+    })} -->
+</main>
+
+<script>
+
+const productsResponse = await fetch("http://localhost:1337/api/products?populate=*", {
+    method: "get",
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem("Authorization")
+    }
+})
+console.log(productsResponse);
+
+const data = await productsResponse.json();
+console.log(data);
+
+</script>
