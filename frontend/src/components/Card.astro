@@ -4,24 +4,21 @@ export interface OneProduct {
 	id: number;
 	attributes: {
 		Title: string;
-		body: string;
-		href: string;
 		Price: number;
 		Image: string[];
 		createdAt: Date;
 	}
 }
 
-const { attributes } = Astro.props;
-const { href, Title, body, Price, Image } = attributes;
+const { id, attributes } = Astro.props;
+const { Title, Price, Image } = attributes;
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 
-console.log(STRAPI_URL + `${Image.data[0].attributes.url}`);
 ---
 
 <div class="link-card">
-	<a href={href}>
+	<a href={id}>
 		<img id="card-image" src={STRAPI_URL + Image.data[0].attributes.url}>
 
 		<div id="card-info">

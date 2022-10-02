@@ -1,4 +1,4 @@
-import { getCookie } from "../../utils/headers";
+import { getCookie } from "../../../utils/headers";
 
 export async function get({ params, request }: any) {
   const authorizationCookie = getCookie(
@@ -29,6 +29,7 @@ export async function get({ params, request }: any) {
 }
 
 export async function put({ params, request }: any) {
+  console.log(request);
   const authorizationCookie = getCookie(
     request.headers.get("cookie"),
     "Authorization"
@@ -41,18 +42,24 @@ export async function put({ params, request }: any) {
   }
 
   const id = params.id;
-
+  const body = await request.json();
+  console.log(body);
   const changeOneProductURL = `http://localhost:1337/api/products/${id}`;
 
   const oneProductResponse = await fetch(changeOneProductURL, {
     method: "PUT",
     headers: {
       Authorization: authorizationCookie,
+      "Content-Type": "application/json",
     },
+
+    body: JSON.stringify({
+      data: body,
+    }),
   });
 
   const oneProductData = await oneProductResponse.json();
-
+  console.log(oneProductData);
   return new Response(JSON.stringify(oneProductData), { status: 200 });
 }
 

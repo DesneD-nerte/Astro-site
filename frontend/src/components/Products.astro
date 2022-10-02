@@ -1,5 +1,4 @@
 ---
-import Layout from "../layouts/Layout.astro"
 import Card, { OneProduct } from "./Card.astro";
 
 
@@ -13,7 +12,6 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
     })
     .then((response) => response.json() )
     .then((responseData) => responseData.data )
-    console.log(productsData);  
 ---
 
 <main>

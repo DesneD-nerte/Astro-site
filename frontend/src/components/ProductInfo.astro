@@ -1,4 +1,6 @@
 ---
+import ProductEdit from "./ProductEdit.astro";
+
 export interface ProductInfoProps {
     data: {
         id: number;
@@ -25,9 +27,16 @@ const productData = Astro.props.data;
     </div>
 
     <div class="d-flex flex-column flex-center">
-        <button class="btn btn-success w-100 h-30px mt-2 lh-0">Add product</button>
-        <button class="btn btn-primary w-100 h-30px mt-2 lh-0">Edit product</button>
-        <button class="btn btn-danger w-100 h-30px mt-2 lh-0">Delete product</button>
+        <div class="d-flex flex-column w-100 form-control mt-2">
+            <p>Main zone</p>
+            <button class="btn btn-success h-30px mt-2 lh-0">Add product to basket</button>
+            <button class="btn btn-secondary h-30px mt-2 lh-0">Remove product from basket</button>
+        </div>
+        <div class="d-flex flex-column w-100 form-control mt-2">
+            <p>Edit zone</p>
+            <ProductEdit></ProductEdit>
+            <button class="btn btn-danger h-30px mt-2 lh-0">Delete product</button>
+        </div>
     </div>
 
 </div>

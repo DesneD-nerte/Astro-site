@@ -1,0 +1,56 @@
+---
+
+---
+
+<button type="button" class="btn btn-primary w-100 h-30px mt-2 lh-0" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+    Edit product
+</button>
+
+<div class="modal fade" tabindex="-1" id="kt_modal_1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Modal title</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-1"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <input id="title" class="form-control" placeholder="Title" type="text" name="title"/>
+                <input id="price" class="form-control mt-5" placeholder="Price" type="text" name="price"/>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button id="button-save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    const id = window.location.href.split("/").pop();
+
+    const button = document.getElementById("button-save");
+    button.addEventListener("click", function() {
+        editProduct(id);
+    })
+
+    async function editProduct(id) {
+        const titleInputValue = document.getElementById("title");
+        const priceInputValue = document.getElementById("price");
+
+        const productResponse = await fetch(`/api/products/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                "Title": titleInputValue.value,
+                "Price": priceInputValue.value
+            })
+        });
+        const data = await productResponse.json();
+    }
+</script>
