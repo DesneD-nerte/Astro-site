@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { checkAuthToken, getCookie } from "../../utils/headers";
+import { checkAuthToken, getCookie } from "../../../utils/headers";
 
 export const get: APIRoute = async ({ params, request }: any) => {
   const authorizationCookie = getCookie(

@@ -1,0 +1,43 @@
+---
+import Carousel from "../../components/Carousel.astro";
+import ProductInfo from "../../components/ProductInfo.astro";
+import Layout from "../../layouts/Layout.astro"
+
+const { id } = Astro.params;
+
+const authorizationCookie = Astro.cookies.get("Authorization");
+
+const oneProductData = await fetch(`http://localhost:1337/api/products/${id}/?populate=*`, {
+    method: "GET",
+    headers: {
+        Authorization: authorizationCookie.value as string
+    }
+})
+.then((response) => response.json() )
+.then((responseData) => responseData.data )
+console.log(oneProductData.attributes.Image.data);  
+
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
+
+---
+
+
+<Layout title={"product №" + id}>
+    <main>
+        <div id="product-container" class="d-flex">
+            <Carousel data={oneProductData.attributes.Image.data}></Carousel>
+            <ProductInfo data={oneProductData}></ProductInfo>
+            
+        </div>
+    </main>
+</Layout>
+
+<style>
+    #product-container {
+        padding: 15px;
+        margin: 10px;
+        border: 1px solid rgb(223, 223, 223);
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px gray;
+    }
+</style>
