@@ -8,7 +8,7 @@ exports.default = [
         config: {
             enabled: true,
             headers: "*",
-            origin: ["http://localhost:3000"],
+            origin: ["http://localhost:3000", "http://localhost:1337"],
         },
     },
     "strapi::poweredBy",
