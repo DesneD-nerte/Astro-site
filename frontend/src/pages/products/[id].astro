@@ -1,7 +1,6 @@
 ---
-import Carousel from "../../components/Carousel.astro";
-import ProductEdit from "../../components/ProductEdit.astro";
-import ProductInfo from "../../components/ProductInfo.astro";
+import Carousel from "../../components/productInfo/Carousel.astro";
+import ProductPanel from "../../components/productInfo/ProductPanel.astro";
 import Layout from "../../layouts/Layout.astro"
 
 const { id } = Astro.params;
@@ -26,7 +25,7 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
     <main>
         <div id="product-container" class="d-flex">
             <Carousel data={oneProductData.attributes.Image.data}></Carousel>
-            <ProductInfo data={oneProductData}></ProductInfo>
+            <ProductPanel data={oneProductData}></ProductPanel>
         </div>
     </main>
 </Layout>

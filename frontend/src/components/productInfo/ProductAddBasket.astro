@@ -1,0 +1,67 @@
+---
+const authorizationCookie = Astro.cookies.get("Authorization");
+
+const myData = await fetch("http://localhost:1337/api/users/me?populate[Cart][populate]=*", {
+    method: "GET",
+    headers: {
+        Authorization: authorizationCookie.value as string
+    }
+})
+    .then((response) => response.json() )
+    .then((responseData) => responseData )
+
+---
+
+<input id="user-products-input" class="" type="text" value={JSON.stringify(myData.Cart.products)}/>
+<button type="button" id="kt_docs_sweetalert_basic" class="btn btn-success h-30px mt-2 p-0">Add product to basket</button>
+
+<script>
+    const id = window.location.href.split("/").pop() as string;
+
+    const button = document.getElementById('kt_docs_sweetalert_basic') as HTMLButtonElement;
+    const cartProductsInput = document.getElementById("user-products-input") as HTMLInputElement;
+    
+    const productsUser = JSON.parse(cartProductsInput.value);
+
+    const productExisted = productsUser.find((oneProduct: any) => {
+        return (oneProduct.id == id);
+    })
+    
+    if(!productExisted) {
+        productsUser.push({id: id});
+
+        button.addEventListener("click", function() {
+            addProductToBasket(id);
+        })
+    }
+
+    async function addProductToBasket(id: string) {
+        const productResponse = await fetch(`/api/users/${id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                "Cart": {
+                    "products": productsUser
+                }
+        })
+        });
+    }
+</script>
+
+<script is:inline>
+
+    const button = document.getElementById('kt_docs_sweetalert_basic');
+
+    button.addEventListener('click', e =>{
+        e.preventDefault();
+
+        Swal.fire({
+            text: "Product was added!",
+            icon: "success",
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    });
+</script>

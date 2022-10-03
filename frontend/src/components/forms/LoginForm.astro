@@ -51,7 +51,7 @@ const { buttonText } = Astro.props;
     .then((response) => {
       return (response.json()
         .then((data) => {
-          document.location.href = "/home"
+          document.location.href = "/products"
           
           document.cookie = `Authorization=Bearer ${data.jwt }`;
         })  
