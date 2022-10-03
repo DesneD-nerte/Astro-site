@@ -1,0 +1,50 @@
+---
+
+---
+
+<button type="button" class="btn btn-danger w-100 h-30px mt-2 p-0" data-bs-toggle="modal" data-bs-target="#kt_modal_2">
+    Delete product
+</button>
+
+<div class="modal fade" tabindex="-1" id="kt_modal_2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Deleting product</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="svg-icon svg-icon-1"></span>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to uninstall this product?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">No</button>
+                <button id="button-yes" type="button" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const id = window.location.href.split("/").pop() as string;
+
+    const button = document.getElementById("button-yes")  as HTMLButtonElement;
+    button.addEventListener("click", function() {
+        removeProduct(id);
+    })
+
+    async function removeProduct(id: string) {
+        const productResponse = await fetch(`/api/products/${id}`, {
+            method: "DELETE"
+        });
+
+        document.location.href = "/products";
+    }
+
+</script>

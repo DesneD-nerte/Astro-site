@@ -2,7 +2,7 @@
 
 ---
 
-<button type="button" class="btn btn-primary w-100 h-30px mt-2 lh-0" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+<button type="button" class="btn btn-primary w-100 h-30px mt-2 p-0" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
     Edit product
 </button>
 
@@ -10,7 +10,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Modal title</h3>
+                <h3 class="modal-title">Editing product</h3>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -32,17 +32,17 @@
     </div>
 </div>
 
-<script is:inline>
-    const id = window.location.href.split("/").pop();
+<script>
+    const id = window.location.href.split("/").pop() as string;
 
-    const button = document.getElementById("button-save");
+    const button = document.getElementById("button-save") as HTMLButtonElement;
     button.addEventListener("click", function() {
         editProduct(id);
     })
 
-    async function editProduct(id) {
-        const titleInputValue = document.getElementById("title");
-        const priceInputValue = document.getElementById("price");
+    async function editProduct(id: string) {
+        const titleInputValue = document.getElementById("title") as HTMLInputElement;
+        const priceInputValue = document.getElementById("price")  as HTMLInputElement;
 
         const productResponse = await fetch(`/api/products/${id}`, {
             method: "PUT",
@@ -51,6 +51,5 @@
                 "Price": priceInputValue.value
             })
         });
-        const data = await productResponse.json();
     }
 </script>

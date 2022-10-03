@@ -5,6 +5,7 @@ export interface CarouselProps {
     data: [{
         id: number;
         attributes: {
+            name: string,
             url: string
         }
     }]
@@ -15,7 +16,7 @@ const images = Astro.props.data;
 
 <div id="kt_carousel_2_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
     <div class="carousel-inner">
-        {images.map((oneImage: any, index: number) => {
+        {images && images.map((oneImage: any, index: number) => {
             return (
                 <div id="carousel-wrapper-image" class={index === 0 ? "carousel-item active" : "carousel-item"}>
                     <img id="carousel-image" src={STRAPI_URL + oneImage.attributes.url}/>
@@ -26,7 +27,7 @@ const images = Astro.props.data;
 
     <div>
         <ol class="p-0 m-0 carousel-indicators carousel-indicators-bullet carousel-indicators-active-primary">
-            {images.map((oneImage: any, index: number) => {
+            {images && images.map((oneImage: any, index: number) => {
                 return (
                     <li data-bs-target="#kt_carousel_2_carousel" data-bs-slide-to={index} class={index === 0 ? "ms-1 active" : "ms-1"}></li>
                 )

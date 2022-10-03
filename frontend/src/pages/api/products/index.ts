@@ -1,64 +1,22 @@
-import type { APIRoute } from "astro";
-import { checkAuthToken, getCookie } from "../../../utils/headers";
+import type { APIRoute, Params } from "astro";
+import { getFetchResponse } from "../../../utils/fetch";
 
-export const get: APIRoute = async ({ params, request }: any) => {
-  const authorizationCookie = getCookie(
-    request.headers.get("cookie"),
-    "Authorization"
-  );
-
-  if (!authorizationCookie) {
-    return new Response(JSON.stringify({ message: "Not authorized" }), {
-      status: 403,
-    });
-  }
-  console.log(123);
-  const getAllProductsURL = "http://localhost:1337/api/products?populate=*";
-
-  const productsResponse = await fetch(getAllProductsURL, {
+export const get: APIRoute = async ({ params, request }: { params: Params; request: Request }) => {
+  return await getFetchResponse(request, `http://localhost:1337/api/products?populate=*`, {
     method: "GET",
-    headers: {
-      Authorization: authorizationCookie,
-    },
   });
+};
 
-  const productsData = await productsResponse.json();
+export async function post({ params, request }: { params: Params; request: Request }) {
+  const body = await request.json();
 
-  return new Response(JSON.stringify(productsData), {
-    status: 200,
+  return await getFetchResponse(request, `http://localhost:1337/api/products`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      data: body,
+    }),
   });
-  // return {
-  //   body: JSON.stringify({
-  //     message: "This is a get request!",
-  //   }),
-  // };
-};
-
-export async function post({ params, request }: any) {
-  const authorizationCookie = getCookie(
-    request.headers.get("cookie"),
-    "Authorization"
-  );
-
-  if (!authorizationCookie) {
-    return new Response(JSON.stringify({ message: "Not authorized" }), {
-      status: 403,
-    });
-  }
-
-  const createNewProductURL = "http://localhost:1337/api/products";
-
-  const productResponse = await fetch(createNewProductURL, {
-    method: "POST",
-    headers: {
-      Authorization: authorizationCookie,
-    },
-  });
-
-  const newProductData = await productResponse.json();
-
-  return new Response(JSON.stringify(newProductData), { status: 200 });
 }

@@ -1,92 +1,33 @@
-import { getCookie } from "../../../utils/headers";
+import type { Params } from "astro";
+import { getFetchResponse } from "../../../utils/fetch";
 
-export async function get({ params, request }: any) {
-  const authorizationCookie = getCookie(
-    request.headers.get("cookie"),
-    "Authorization"
-  );
-
-  if (!authorizationCookie) {
-    return new Response(JSON.stringify({ message: "Not authorized" }), {
-      status: 403,
-    });
-  }
-
+export async function get({ params, request }: { params: Params; request: Request }) {
   const id = params.id;
 
-  const getOneProductURL = `http://localhost:1337/api/products/${id}?populate=*`;
-
-  const oneProductResponse = await fetch(getOneProductURL, {
+  return await getFetchResponse(request, `http://localhost:1337/api/products/${id}?populate=*`, {
     method: "GET",
-    headers: {
-      Authorization: authorizationCookie,
-    },
   });
-
-  const oneProductData = await oneProductResponse.json();
-
-  return new Response(JSON.stringify(oneProductData), { status: 200 });
 }
 
-export async function put({ params, request }: any) {
-  console.log(request);
-  const authorizationCookie = getCookie(
-    request.headers.get("cookie"),
-    "Authorization"
-  );
-
-  if (!authorizationCookie) {
-    return new Response(JSON.stringify({ message: "Not authorized" }), {
-      status: 403,
-    });
-  }
-
+export async function put({ params, request }: { params: Params; request: Request }) {
   const id = params.id;
   const body = await request.json();
-  console.log(body);
-  const changeOneProductURL = `http://localhost:1337/api/products/${id}`;
 
-  const oneProductResponse = await fetch(changeOneProductURL, {
+  return await getFetchResponse(request, `http://localhost:1337/api/products/${id}`, {
     method: "PUT",
     headers: {
-      Authorization: authorizationCookie,
       "Content-Type": "application/json",
     },
-
     body: JSON.stringify({
       data: body,
     }),
   });
-
-  const oneProductData = await oneProductResponse.json();
-  console.log(oneProductData);
-  return new Response(JSON.stringify(oneProductData), { status: 200 });
 }
 
-export async function del({ params, request }: any) {
-  const authorizationCookie = getCookie(
-    request.headers.get("cookie"),
-    "Authorization"
-  );
-
-  if (!authorizationCookie) {
-    return new Response(JSON.stringify({ message: "Not authorized" }), {
-      status: 403,
-    });
-  }
-
+export async function del({ params, request }: { params: Params; request: Request }) {
   const id = params.id;
-
-  const deleteOneProductURL = `http://localhost:1337/api/products/${id}`;
-
-  const oneProductResponse = await fetch(deleteOneProductURL, {
+  console.log(params);
+  return await getFetchResponse(request, `http://localhost:1337/api/products/${id}`, {
     method: "DELETE",
-    headers: {
-      Authorization: authorizationCookie,
-    },
   });
-
-  const oneProductData = await oneProductResponse.json();
-
-  return new Response(JSON.stringify(oneProductData), { status: 200 });
 }
