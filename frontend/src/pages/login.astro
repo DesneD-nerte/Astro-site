@@ -6,29 +6,9 @@ import LoginForm from "../components/forms/LoginForm.astro";
 
 <Layout title="Login Page">
   <main class="d-flex flex-row flex-center">
+    <div class="d-flex flex-column flex-center position-absolute top-25">
     <LoginForm buttonText="Sign in"/>
+    <a href="/auth" class="mt-4">Don't have an account yet?</a>
+    </div>
   </main>
 </Layout>
-
-<!-- <Layout title="Login Page">
-  <main>
-    <h1>Sign In</h1>
-    <form action="#" method="post">
-      <input placeholder="Username" />
-      <input placeholder="Email" type="email" />
-      <input placeholder="Password" type="password" />
-      <input placeholder="Sign In" type="submit" />
-    </form>
-
-    <button>Sign Up</button>
-  </main>
-</Layout>
-
-<style>
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-</style> -->

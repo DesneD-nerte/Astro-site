@@ -14,7 +14,7 @@ const { buttonText } = Astro.props;
 
 <form
   id="form-enter-auth"
-  class="d-flex flex-column flex-center form"
+  class="d-flex flex-column flex-center form p-8 bg-white border border-gray-300 rounded shadow-sm"
   autocomplete="off"
   onsubmit="return false"
 >
@@ -24,37 +24,23 @@ const { buttonText } = Astro.props;
   <ValidationButton buttonText={buttonText} />
 </form>
 
-<style>
-  #form-enter-auth {
-    padding: 25px;
-    border: 1px solid rgb(218, 218, 218);
-    box-shadow: 0px 0px 5px gray;
-    border-radius: 10px;
-    background-color: white;
-  }
-</style>
 
 <script>
   function sendAuthData() {
     const formData = new FormData(form);
 
-    fetch("http://localhost:1337/api/auth/local/register", {
-      method: "post",
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    fetch("/api/auth/register", {
+      method: "POST",
       body: JSON.stringify(Object.fromEntries(formData))
     })
-    .then((response) => {
-      return (response.json()
-        .then((data) => {
-          document.location.href = "/products"
+      .then((response) => {
+        response.json()
+          .then((data) => {
+            document.location.href = "/products"
 
-          document.cookie = `Authorization=Bearer ${data.jwt }`;
-        })  
-      );
-    })
-
+            document.cookie = `Authorization=Bearer ${data.jwt }`;
+          })
+      })
   };
 
   const form = document.getElementById("form-enter-auth") as HTMLFormElement;

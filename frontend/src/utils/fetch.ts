@@ -1,6 +1,6 @@
 import { checkAuthorization, getCookie } from "./headers";
 
-export async function getFetchResponse(request: any, url: string, init?: RequestInit) {
+export async function getCookieFetchResponse(request: any, url: string, init?: RequestInit) {
   const authorizationCookie = getCookie(request, "Authorization");
 
   const notAuthResponse = checkAuthorization(authorizationCookie);
@@ -8,7 +8,7 @@ export async function getFetchResponse(request: any, url: string, init?: Request
     return notAuthResponse;
   }
 
-  return entityResponse(url, {
+  return getFetchResponse(url, {
     method: init?.method,
     headers: {
       ...init?.headers,
@@ -18,7 +18,7 @@ export async function getFetchResponse(request: any, url: string, init?: Request
   });
 }
 
-async function entityResponse(url: string, init?: RequestInit) {
+export async function getFetchResponse(url: string, init?: RequestInit) {
   const entityResponse = await fetch(url, init);
 
   const entityData = await entityResponse.json();

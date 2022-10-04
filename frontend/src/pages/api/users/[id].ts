@@ -1,11 +1,11 @@
 import type { Params } from "astro";
-import { getFetchResponse } from "../../../utils/fetch";
+import { getCookieFetchResponse } from "../../../utils/fetch";
 
 export async function post({ params, request }: { params: Params; request: Request }) {
   const id = params;
   const body = await request.json();
 
-  return await getFetchResponse(request, `http://localhost:1337/api/users/${id}`, {
+  return await getCookieFetchResponse(request, `http://localhost:1337/api/users/${id}`, {
     method: "",
     headers: {
       "Content-Type": "application/json",

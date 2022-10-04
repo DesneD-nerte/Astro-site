@@ -11,15 +11,36 @@ const images = Astro.props.data;
 ---
 
 <div id="kt_carousel_2_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
-    <div class="carousel-inner">
-        {images && images.map((oneImage: any, index: number) => {
-            return (
-                <div id="carousel-wrapper-image" class={index === 0 ? "carousel-item active" : "carousel-item"}>
-                    <img id="carousel-image" src={STRAPI_URL + oneImage.attributes.url}/>
-                </div>
-            )
-        })}
-    </div>
+    <!-- <div class="carousel-inner">
+        {images 
+            ? images.map((oneImage: any, index: number) => {
+                return (
+                    <div id="carousel-wrapper-image" class={index === 0 ? "carousel-item active" : "carousel-item"}>
+                        <img class="w-100 h-100" src={STRAPI_URL + oneImage.attributes.url}/>
+                    </div>
+                )
+                }) 
+            : <div class="d-flex flex-center">
+                <p>No image</p>
+            </div>
+        }
+    </div> -->
+    {images ? 
+        <div class="carousel-inner">
+            {
+             images.map((oneImage: any, index: number) => {
+                return (
+                    <div id="carousel-wrapper-image" class={index === 0 ? "carousel-item active" : "carousel-item"}>
+                        <img class="w-100 h-100" src={STRAPI_URL + oneImage.attributes.url}/>
+                    </div>
+                )
+                })
+            }
+        </div>
+        : <div class="d-flex flex-center h-100 fs-2">
+            <p>No image</p>
+        </div>
+    }
 
     <div>
         <ol class="p-0 m-0 carousel-indicators carousel-indicators-bullet carousel-indicators-active-primary">
@@ -36,10 +57,5 @@ const images = Astro.props.data;
     #kt_carousel_2_carousel {
         width: 600px;
         flex: 0.65;
-    }
-
-    #carousel-image {
-        width: 100%;
-        height: 100%;
     }
 </style>
