@@ -2,6 +2,7 @@
 import Carousel from "../../components/productInfo/Carousel.astro";
 import ProductPanel from "../../components/productInfo/ProductPanel.astro";
 import Layout from "../../layouts/Layout.astro"
+import type { User } from "../../types/User";
 
 const { id } = Astro.params;
 
@@ -16,6 +17,15 @@ const oneProductData = await fetch(`http://localhost:1337/api/products/${id}/?po
 .then((response) => response.json() )
 .then((responseData) => responseData.data )
 
+const myData: User = await fetch("http://localhost:1337/api/users/me?populate[Cart][populate]=*", {
+    method: "GET",
+    headers: {
+        Authorization: authorizationCookie.value as string
+    }
+})
+    .then((response) => response.json() )
+    .then((responseData) => responseData )
+
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 
 ---
@@ -25,7 +35,7 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
     <main>
         <div id="product-container" class="d-flex">
             <Carousel data={oneProductData.attributes.Image.data}></Carousel>
-            <ProductPanel data={oneProductData}></ProductPanel>
+            <ProductPanel data={oneProductData} myData={myData}></ProductPanel>
         </div>
     </main>
 </Layout>

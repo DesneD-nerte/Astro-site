@@ -21,7 +21,7 @@ export async function post({ params, request }: { params: Params; request: Reque
 }
 
 export async function put({ params, request }: { params: Params; request: Request }) {
-  const id = params;
+  const { id } = params;
   const body = await request.json();
 
   return await getFetchResponse(request, `http://localhost:1337/api/users/${id}`, {

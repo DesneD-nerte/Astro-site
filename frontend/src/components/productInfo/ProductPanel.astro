@@ -1,20 +1,17 @@
 ---
-import ProductAddBasket from "./ProductAddBasket.astro";
+import type { Product } from "../../types/Product";
+import type { User } from "../../types/User";
+import ProductBasket from "./ProductBasket.astro";
 import ProductDelete from "./ProductDelete.astro";
 import ProductEdit from "./ProductEdit.astro";
 
 export interface ProductInfoProps {
-    data: {
-        id: number;
-        attributes: {
-            Title: string;
-            Price: string;
-        }
-    }
+    myData: User,
+    data: Product
 }
 
 const productData = Astro.props.data;
-
+const { myData } = Astro.props;
 ---
 
 <div id="product" class="ms-5">
@@ -31,9 +28,7 @@ const productData = Astro.props.data;
     <div class="d-flex flex-column flex-center">
         <div class="d-flex flex-column w-100 form-control mt-2">
             <p>Main zone</p>
-            <!-- <button class="btn btn-success h-30px mt-2  p-0">Add product to basket</button> -->
-            <ProductAddBasket></ProductAddBasket>
-            <button class="btn btn-secondary h-30px mt-2  p-0">Remove product from basket</button>
+            <ProductBasket myData={myData}></ProductBasket>
         </div>
         <div class="d-flex flex-column w-100 form-control mt-2">
             <p>Edit zone</p>

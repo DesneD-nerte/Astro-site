@@ -1,14 +1,10 @@
 ---
+import type { Image } from "../../types/Image";
+
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 
 export interface CarouselProps {
-    data: [{
-        id: number;
-        attributes: {
-            name: string,
-            url: string
-        }
-    }]
+    data: [Image]
 }
 
 const images = Astro.props.data;
