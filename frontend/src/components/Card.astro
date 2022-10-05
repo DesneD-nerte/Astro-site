@@ -1,6 +1,6 @@
 ---
 
-export interface OneProduct {
+interface OneProductProps {
 	id: number;
 	attributes: {
 		Title: string;
@@ -58,16 +58,6 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 	}
 
-	/* #link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: 1rem 1.3rem;
-		border-radius: 0.35rem;
-		color: #111;
-		background-color: white;
-		opacity: 0.8;
-	} */
 	#link-card > a {
 		width: 100%;
 		text-decoration: none;

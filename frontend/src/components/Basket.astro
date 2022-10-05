@@ -1,0 +1,36 @@
+---
+import type { OneProduct } from "./Card.astro";
+import Card from "./Card.astro";
+
+const authorizationCookie = Astro.cookies.get("Authorization");
+
+const productsData = await fetch("http://localhost:1337/api/users/me?populate=deep", {
+        method: "GET",
+        headers: {
+            Authorization: authorizationCookie.value as string
+        }
+    })
+    .then((response) => response.json())
+    .then((responseData) => responseData.Cart.products )
+
+    console.log(productsData[0].Image);
+    const imageCardObject = {
+        data: 
+    }
+---
+
+<div class="container-sm">
+    <div class="row">
+        {productsData.map((oneProduct: OneProduct) => {
+            return (
+                <Card id={oneProduct.id}
+                    attributes={{
+                        Title: oneProduct.Title,
+                        Price: oneProduct.Price,
+                        // Image: 
+                    }}
+                />
+            )
+        })}
+    </div>
+</div>

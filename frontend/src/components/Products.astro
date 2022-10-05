@@ -1,5 +1,6 @@
 ---
-import Card, { OneProduct } from "./Card.astro";
+import type { Product } from "../types/Product";
+import Card from "./Card.astro";
 
 
 const authorizationCookie = Astro.cookies.get("Authorization");
@@ -17,7 +18,7 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
 
 <div class="container-sm">
     <div class="row">
-        {productsData.map((oneProduct: OneProduct) => {
+        {productsData.map((oneProduct: Product) => {
             return (
                 <Card {...oneProduct}/>
             )
