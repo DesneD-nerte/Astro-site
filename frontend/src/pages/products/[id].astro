@@ -31,12 +31,14 @@ const myData: User = await fetch("http://localhost:1337/api/users/me?populate[Ca
 
 <Layout title={"product №" + id}>
     <main>
-        <div id="product-container" class="d-flex p-3 m-2 border border-gray-300 rounded shadow-sm">
+        <div class="container-md p-3 mt-3 border border-gray-300 rounded shadow-sm">
             <a class="position-absolute ms-2 mt-2 p-3 z-index-1 bg-light bg-hover-secondary rounded" href="/products">
                 <img src="/media/icons/duotune/arrows/arr022.svg"/>
             </a>
-            <Carousel data={oneProductData.attributes.Image.data}></Carousel>
-            <ProductPanel data={oneProductData} myData={myData}></ProductPanel>
+            <div class="row g-5">
+                <Carousel data={oneProductData.attributes.Image.data}></Carousel>
+                <ProductPanel data={oneProductData} myData={myData}></ProductPanel>
+            </div>
         </div>
     </main>
 </Layout>

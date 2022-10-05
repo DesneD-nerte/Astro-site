@@ -15,14 +15,12 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
 
 ---
 
-<main>
-    <div class="container-sm">
-        <div class="row g-5">
-                {productsData.map((oneProduct: OneProduct) => {
-                    return (
-                        <Card {...oneProduct}/>
-                    )
-                })}
-        </div>
+<div class="container-sm">
+    <div class="row">
+        {productsData.map((oneProduct: OneProduct) => {
+            return (
+                <Card {...oneProduct}/>
+            )
+        })}
     </div>
-</main>
+</div>

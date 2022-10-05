@@ -14,7 +14,7 @@ const productData = Astro.props.data;
 const { myData } = Astro.props;
 ---
 
-<div id="product" class="ms-5">
+<div id="product" class="col-lg-4">
     <label for="product-title">Title</label>
     <div id="product-title" class="d-flex flex-center bg-secondary h-50px fs-2x ">
         {productData.attributes.Title}
@@ -38,9 +38,3 @@ const { myData } = Astro.props;
     </div>
 
 </div>
-
-<style>
-    #product {
-        flex: 0.35;
-    }
-</style>
