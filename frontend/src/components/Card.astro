@@ -8,22 +8,29 @@ const { id, title, price, image } = Astro.props;
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 ---
 
-<div class="col-lg-3">
-	<div id="link-card" class="card card-bordered mb-5">
-		<a href={"/products/" + id}>
-			<div id="test" class="d-flex flex-center min-h-300px card-body">
+<div class="col-xl-3 g-5">
+	<div id="link-card" class="h-100 card card-bordered">
+		<a href={"/products/" + id} class="d-flex flex-column h-100">
+			<div class="d-flex flex-center h-100">
 				{image 
-					? <img class="w-100 h-100" src={STRAPI_URL + image[0].url}/>
+					? <div class="">
+						<img class="w-100 h-100" src={STRAPI_URL + image[0].url}/>
+					</div>
 					: <p>No image</p>
 				}
 			</div>
-			<div class="d-flex justify-content-between card-footer">
-				<h2>
-					{title}
-				</h2>
-				<p class="fs-4 fw-bold">
-					{price} $
-				</p>
+			<div class="d-flex flex-column  card-footer">
+				<div>
+					<h2>
+						{title}
+					</h2>
+				</div>
+				<div class="d-flex mt-3">
+					<p class="fs-6">$</p>
+					<p class="fs-1 fw-bold ms-1">
+						{price}
+					</p>
+				</div>
 			</div>
 		</a>
 	</div>
@@ -52,6 +59,10 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 		margin: 0;
 		font-size: 1.25rem;
 		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	p {
 		margin-top: 0.5rem;
