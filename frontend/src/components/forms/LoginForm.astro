@@ -3,28 +3,27 @@ import PasswordMeter from "../ui/PasswordMeter.astro";
 import EmailInput from "../ui/EmailInput.astro";
 import ValidationButton from "../ui/ValidationButton.astro";
 
-export interface Props {
-  buttonText: string;
+interface Props {
+ 	buttonText: string;
 }
 
 const { buttonText } = Astro.props;
 
 ---
 
-<form
-  id="form-enter-login"
-  class="d-flex flex-column flex-center form p-8 bg-white border border-gray-300 rounded shadow-sm"
-  autocomplete="off"
-  onsubmit="return false"
+<form id="form-enter-login"
+	class="d-flex flex-column flex-center form p-8 bg-white border border-gray-300 rounded shadow-sm"
+	autocomplete="off"
+	onsubmit="return false"
 >
-  <EmailInput />
-  <PasswordMeter />
-  <ValidationButton buttonText={buttonText} />
+	<EmailInput />
+	<PasswordMeter />
+	<ValidationButton buttonText={buttonText} />
 </form>
 
 <script>
 
-  function sendLoginData() {
+function sendLoginData() {
     const formData = new FormData();
 
     const formElements = form.elements
@@ -35,21 +34,21 @@ const { buttonText } = Astro.props;
     formData.append("password", inputPassword.value);
 
     fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(Object.fromEntries(formData))
+		method: "POST",
+		body: JSON.stringify(Object.fromEntries(formData))
     })
-      .then((response) => {
-        response.json()
-          .then((data) => {
-            document.location.href = "/products"
+	.then((response) => {
+		response.json()
+		.then((data) => {
+			document.location.href = "/products"
 
-            document.cookie = `Authorization=Bearer ${data.jwt }`;
-          })
-      })
-  };
+			document.cookie = `Authorization=Bearer ${data.jwt }`;
+		})
+	})
+};
 
-  const form = document.getElementById("form-enter-login") as HTMLFormElement;
+const form = document.getElementById("form-enter-login") as HTMLFormElement;
 
-  form.addEventListener("submit", sendLoginData, false);
+form.addEventListener("submit", sendLoginData, false);
 
 </script>

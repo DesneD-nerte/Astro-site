@@ -1,7 +1,7 @@
 ---
-import type { Product } from "../types/Product";
+import type { Card as CardType } from "../types/Card";
+import { toCardProps } from "../utils/jsonResponse";
 import Card from "./Card.astro";
-
 
 const authorizationCookie = Astro.cookies.get("Authorization");
 
@@ -12,15 +12,20 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
         }
     })
     .then((response) => response.json() )
-    .then((responseData) => responseData.data )
-
+    .then((responseData) => {
+        return toCardProps(responseData.data);
+     })
 ---
 
 <div class="container-sm">
     <div class="row">
-        {productsData.map((oneProduct: Product) => {
+        {productsData.map((oneProduct: CardType) => {
             return (
-                <Card {...oneProduct}/>
+                <Card id={oneProduct.id}
+                    title={oneProduct.title}
+                    price={oneProduct.price}
+                    image={oneProduct.image}
+                />
             )
         })}
     </div>

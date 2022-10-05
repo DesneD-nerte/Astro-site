@@ -1,25 +1,9 @@
 ---
+import type { Card } from "../types/Card";
 
-interface OneProductProps {
-	id: number;
-	attributes: {
-		Title: string;
-		Price: number;
-		Image?: {
-			data: [{
-				id: number,
-				attributes: {
-					name: string,
-					url: string
-				}
-			}]
-		}
-		createdAt: Date;
-	}
-}
+interface Props extends Card {}
 
-const { id, attributes } = Astro.props;
-const { Title, Price, Image } = attributes;
+const { id, title, price, image } = Astro.props;
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 ---
@@ -28,17 +12,17 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 	<div id="link-card" class="card card-bordered mb-5">
 		<a href={"/products/" + id}>
 			<div id="test" class="d-flex flex-center min-h-300px card-body">
-				{Image.data 
-					? <img class="w-100 h-100" src={Image.data ? STRAPI_URL + Image.data[0].attributes.url : ""}/>
+				{image 
+					? <img class="w-100 h-100" src={STRAPI_URL + image[0].url}/>
 					: <p>No image</p>
 				}
 			</div>
 			<div class="d-flex justify-content-between card-footer">
 				<h2>
-					{Title}
+					{title}
 				</h2>
 				<p class="fs-4 fw-bold">
-					{Price} $
+					{price} $
 				</p>
 			</div>
 		</a>

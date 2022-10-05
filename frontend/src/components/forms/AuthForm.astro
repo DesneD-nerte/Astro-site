@@ -4,47 +4,46 @@ import EmailInput from "../ui/EmailInput.astro";
 import ValidationButton from "../ui/ValidationButton.astro";
 import UsernameInput from "../ui/UsernameInput.astro";
 
-export interface Props {
-  buttonText: string;
+interface Props {
+	buttonText: string;
 }
 
 const { buttonText } = Astro.props;
 
 ---
 
-<form
-  id="form-enter-auth"
-  class="d-flex flex-column flex-center form p-8 bg-white border border-gray-300 rounded shadow-sm"
-  autocomplete="off"
-  onsubmit="return false"
+<form id="form-enter-auth"
+	class="d-flex flex-column flex-center form p-8 bg-white border border-gray-300 rounded shadow-sm"
+	autocomplete="off"
+	onsubmit="return false"
 >
-  <UsernameInput />
-  <EmailInput />
-  <PasswordMeter />
-  <ValidationButton buttonText={buttonText} />
+	<UsernameInput />
+	<EmailInput />
+	<PasswordMeter />
+	<ValidationButton buttonText={buttonText} />
 </form>
 
 
 <script>
-  function sendAuthData() {
-    const formData = new FormData(form);
+function sendAuthData() {
+	const formData = new FormData(form);
 
-    fetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify(Object.fromEntries(formData))
-    })
-      .then((response) => {
-        response.json()
-          .then((data) => {
-            document.location.href = "/products"
+	fetch("/api/auth/register", {
+		method: "POST",
+		body: JSON.stringify(Object.fromEntries(formData))
+	})
+	.then((response) => {
+		response.json()
+		.then((data) => {
+			document.location.href = "/products"
 
-            document.cookie = `Authorization=Bearer ${data.jwt }`;
-          })
-      })
-  };
+			document.cookie = `Authorization=Bearer ${data.jwt }`;
+		})
+	})
+};
 
-  const form = document.getElementById("form-enter-auth") as HTMLFormElement;
+const form = document.getElementById("form-enter-auth") as HTMLFormElement;
 
-  form.addEventListener("submit", sendAuthData, false);
+form.addEventListener("submit", sendAuthData, false);
 
 </script>

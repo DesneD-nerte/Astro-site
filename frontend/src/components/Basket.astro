@@ -1,36 +1,37 @@
 ---
-import type { OneProduct } from "./Card.astro";
+import type { User } from "../types/User";
 import Card from "./Card.astro";
 
 const authorizationCookie = Astro.cookies.get("Authorization");
 
-const productsData = await fetch("http://localhost:1337/api/users/me?populate=deep", {
+const myData = await fetch("http://localhost:1337/api/users/me?populate=deep", {
         method: "GET",
         headers: {
             Authorization: authorizationCookie.value as string
         }
     })
     .then((response) => response.json())
-    .then((responseData) => responseData.Cart.products )
+    .then((responseData: User) => {
+        return responseData;
+        
+    })
 
-    console.log(productsData[0].Image);
-    const imageCardObject = {
-        data: 
-    }
+const myDataCartProducts = myData.Cart?.products;
 ---
 
 <div class="container-sm">
     <div class="row">
-        {productsData.map((oneProduct: OneProduct) => {
-            return (
-                <Card id={oneProduct.id}
-                    attributes={{
-                        Title: oneProduct.Title,
-                        Price: oneProduct.Price,
-                        // Image: 
-                    }}
-                />
-            )
-        })}
+        {myDataCartProducts 
+            ? myDataCartProducts.map((oneProduct) => {
+                return (
+                    <Card id={oneProduct.id}
+                        title={oneProduct.Title}
+                        price={oneProduct.Price}
+                        image={oneProduct.Image}
+                    />
+                )
+            })
+            : <div>Basket is empty</div>
+        }
     </div>
 </div>
