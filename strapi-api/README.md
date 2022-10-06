@@ -1,3 +1,30 @@
+# "Unknown dialect undefined" ERROR
+If you catch this error, the following code helped me
+
+/
+├── node_modules/
+    ├──@strapi/
+        ├──typescript-utils/
+            ├──lib/
+                ├──utils/
+                    ├──get-config-path.js
+
+```js
+module.exports = (dir, { filename = DEFAULT_TS_CONFIG_FILENAME, ancestorsLookup = false } = {}) => {
+  const dirAbsolutePath = path.resolve(dir);
+  const configFilePath = ts.findConfigFile(dirAbsolutePath, ts.sys.fileExists, filename);
+
+  if (!configFilePath || ancestorsLookup) {
+    return configFilePath;
+  }
+
+  return path.resolve(configFilePath).startsWith(dirAbsolutePath) ? configFilePath : undefined;
+};
+```
+
+
+
+
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html) (CLI) which lets you scaffold and manage your project in seconds.
