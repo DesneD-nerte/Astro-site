@@ -2,9 +2,11 @@
 import type { User } from "../types/User";
 import Card from "./Card.astro";
 
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
+
 const authorizationCookie = Astro.cookies.get("Authorization");
 
-const myData = await fetch("http://localhost:1337/api/users/me?populate=deep", {
+const myData = await fetch(`${STRAPI_URL}/api/users/me?populate=deep`, {
         method: "GET",
         headers: {
             Authorization: authorizationCookie.value as string

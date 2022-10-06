@@ -1,7 +1,7 @@
-export function getCookie(request: any, name: string) {
-    let matches = request.headers
-        .get("cookie")
-        .match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
+export function getCookie(cookie: string | null, name: any) {
+    let matches = cookie?.match(
+        new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
+    );
 
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }

@@ -5,7 +5,10 @@ import Layout from "../../layouts/Layout.astro"
 import type { User } from "../../types/User";
 import { getCookie } from "../../utils/headers";
 
-if(!getCookie(Astro.request, "Authorization")) {
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
+const cookie = Astro.request.headers.get("cookie");
+
+if(!getCookie(cookie, "Authorization")) {
     return Astro.redirect("/login");
 }
 
@@ -13,7 +16,7 @@ const { id } = Astro.params;
 
 const authorizationCookie = Astro.cookies.get("Authorization");
 
-const oneProductData = await fetch(`http://localhost:1337/api/products/${id}/?populate=*`, {
+const oneProductData = await fetch(`${STRAPI_URL}/api/products/${id}/?populate=*`, {
     method: "GET",
     headers: {
         Authorization: authorizationCookie.value as string
@@ -22,7 +25,7 @@ const oneProductData = await fetch(`http://localhost:1337/api/products/${id}/?po
 .then((response) => response.json() )
 .then((responseData) => responseData.data )
 
-const myData: User = await fetch("http://localhost:1337/api/users/me?populate[Cart][populate]=*", {
+const myData: User = await fetch(`${STRAPI_URL}/api/users/me?populate[Cart][populate]=*`, {
     method: "GET",
     headers: {
         Authorization: authorizationCookie.value as string
@@ -30,7 +33,6 @@ const myData: User = await fetch("http://localhost:1337/api/users/me?populate[Ca
 })
     .then((response) => response.json() )
     .then((responseData) => responseData )
-
 ---
 
 

@@ -16,13 +16,18 @@ const { myData } = Astro.props;
 
 <div id="product" class="col-lg-4">
     <label for="product-title">Title</label>
-    <div id="product-title" class="d-flex flex-center bg-secondary fs-2x ">
-        {productData.attributes.Title}
+    <div class="d-flex flex-center bg-secondary fs-2x ">
+        <p id={`product-title-${productData.id}`}>
+            {productData.attributes.Title}
+        </p>
     </div>
 
     <label for="product-price" class="mt-5">Price</label>
-    <div id="product-price" class="d-flex flex-center bg-secondary fs-2x">
-        {productData.attributes.Price} $
+    <div class="d-flex flex-center bg-secondary fs-2x">
+        <p id={`product-price-${productData.id}`}>
+            {productData.attributes.Price}
+        </p>
+        <p>&nbsp;$</p>
     </div>
 
     <div class="d-flex flex-column flex-center">
@@ -38,3 +43,19 @@ const { myData } = Astro.props;
     </div>
 
 </div>
+
+<script>
+    import type { Product } from "../../types/Product";
+	import { getCardObject } from "../../utils/jsonResponse";
+	import { addListener } from "../../utils/socket.io";
+
+    addListener("productsChanged", async (data: Product) => {
+        const titleP= document.getElementById(`product-title-${data.id}`) as HTMLParagraphElement;
+        const priceP = document.getElementById(`product-price-${data.id}`) as HTMLParagraphElement;
+
+		const cardProps = getCardObject(data);
+
+        titleP.textContent = cardProps.title;
+        priceP.textContent = cardProps.price;
+    })
+</script>

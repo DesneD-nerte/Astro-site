@@ -1,10 +1,12 @@
 import type { Params } from "astro";
 import { getCookieFetchResponse } from "../../../utils/fetch";
 
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
+
 export async function get({ params, request }: { params: Params; request: Request }) {
     const id = params.id;
 
-    return await getCookieFetchResponse(request, `http://localhost:1337/api/products/${id}?populate=*`, {
+    return await getCookieFetchResponse(request, `${STRAPI_URL}/api/products/${id}?populate=*`, {
         method: "GET",
     });
 }
@@ -13,7 +15,7 @@ export async function put({ params, request }: { params: Params; request: Reques
     const id = params.id;
     const body = await request.json();
 
-    return await getCookieFetchResponse(request, `http://localhost:1337/api/products/${id}`, {
+    return await getCookieFetchResponse(request, `${STRAPI_URL}/api/products/${id}?populate=*`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -27,7 +29,7 @@ export async function put({ params, request }: { params: Params; request: Reques
 export async function del({ params, request }: { params: Params; request: Request }) {
     const id = params.id;
 
-    return await getCookieFetchResponse(request, `http://localhost:1337/api/products/${id}`, {
+    return await getCookieFetchResponse(request, `${STRAPI_URL}/api/products/${id}`, {
         method: "DELETE",
     });
 }

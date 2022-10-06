@@ -1,7 +1,8 @@
 import { checkAuthorization, getCookie } from "./headers";
 
 export async function getCookieFetchResponse(request: Request, url: string, init?: RequestInit) {
-    const authorizationCookie = getCookie(request, "Authorization");
+    const cookies = request.headers.get("cookie") as string;
+    const authorizationCookie = getCookie(cookies, "Authorization");
 
     const notAuthResponse = checkAuthorization(authorizationCookie);
     if (notAuthResponse) {

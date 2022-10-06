@@ -14,6 +14,7 @@
     "@strapi/plugin-users-permissions": "4.4.1",
     "@strapi/strapi": "4.4.1",
     "pg": "8.6.0",
+    "strapi-plugin-io": "^1.1.2",
     "strapi-plugin-populate-deep": "^0.1.2"
   },
   "author": {

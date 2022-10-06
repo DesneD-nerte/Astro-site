@@ -1,14 +1,16 @@
 import type { Params } from "astro";
 import { getFetchResponse } from "../../../utils/fetch";
 
-export async function post({ params, request }: { params: Params; request: Request }) {
-  const body = await request.json();
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 
-  return await getFetchResponse(`http://localhost:1337/api/auth/local`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+export async function post({ params, request }: { params: Params; request: Request }) {
+    const body = await request.json();
+
+    return await getFetchResponse(`${STRAPI_URL}/api/auth/local`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    });
 }

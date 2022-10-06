@@ -4,7 +4,9 @@ import Menu from "../layouts/Menu.astro";
 import Basket from "../components/Basket.astro";
 import { getCookie } from "../utils/headers";
 
-if(!getCookie(Astro.request, "Authorization")) {
+const cookie = Astro.request.headers.get("cookie");
+
+if(!getCookie(cookie, "Authorization")) {
     return Astro.redirect("/login");
 }
 

@@ -3,9 +3,11 @@ import type { Card as CardType } from "../types/Card";
 import { toCardProps } from "../utils/jsonResponse";
 import Card from "./Card.astro";
 
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
+
 const authorizationCookie = Astro.cookies.get("Authorization");
 
-const productsData = await fetch("http://localhost:1337/api/products?populate=*", {
+const productsData = await fetch(`${STRAPI_URL}/api/products?populate=*`, {
         method: "GET",
         headers: {
             Authorization: authorizationCookie.value as string
@@ -18,7 +20,7 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
 ---
 
 <div class="container-sm">
-    <div class="row">
+    <div id="products-row" class="row">
         {productsData.map((oneProduct: CardType) => {
             return (
                 <Card id={oneProduct.id}

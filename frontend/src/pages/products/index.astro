@@ -4,7 +4,9 @@ import Layout from "../../layouts/Layout.astro"
 import Menu from "../../layouts/Menu.astro";
 import { getCookie } from "../../utils/headers";
 
-if(!getCookie(Astro.request, "Authorization")) {
+const cookie = Astro.request.headers.get("cookie");
+
+if(!getCookie(cookie, "Authorization")) {
     return Astro.redirect("/login");
 }
 
@@ -16,3 +18,5 @@ if(!getCookie(Astro.request, "Authorization")) {
         <Products></Products>
     </main>
 </Layout>
+
+<script src="../../utils/socket.io.ts"></script>
