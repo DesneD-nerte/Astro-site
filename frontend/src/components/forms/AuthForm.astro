@@ -4,12 +4,6 @@ import EmailInput from "../ui/EmailInput.astro";
 import ValidationButton from "../ui/ValidationButton.astro";
 import UsernameInput from "../ui/UsernameInput.astro";
 
-interface Props {
-	buttonText: string;
-}
-
-const { buttonText } = Astro.props;
-
 ---
 
 <form id="form-enter-auth"
@@ -20,7 +14,7 @@ const { buttonText } = Astro.props;
 	<UsernameInput />
 	<EmailInput />
 	<PasswordMeter />
-	<ValidationButton buttonText={buttonText} />
+	<ValidationButton buttonText="Register" />
 </form>
 
 
@@ -33,12 +27,14 @@ function sendAuthData() {
 		body: JSON.stringify(Object.fromEntries(formData))
 	})
 	.then((response) => {
-		response.json()
-		.then((data) => {
-			document.location.href = "/products"
+		if(response.status == 200) {
+			response.json()
+			.then((data) => {
+				document.location.href = "/products"
 
-			document.cookie = `Authorization=Bearer ${data.jwt }`;
-		})
+				document.cookie = `Authorization=Bearer ${data.jwt }`;
+			})
+		}
 	})
 };
 

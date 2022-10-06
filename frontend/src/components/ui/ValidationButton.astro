@@ -1,21 +1,20 @@
 ---
-export interface Props {
+interface Props {
   buttonText: string;
 }
 
 const { buttonText } = Astro.props;
 ---
 
-<button
-  id="kt_docs_formvalidation_text_submit"
-  type="submit"
-  class="btn btn-primary w-200px h-40px"
+<button id="kt_docs_formvalidation_text_submit"
+	type="submit"
+	class="btn btn-primary w-200px h-40px"
 >
-  <span class="indicator-label">
-    {buttonText}
-  </span>
-  <span class="indicator-progress">
-    Please wait...
-    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-  </span>
+	<span class="indicator-label">
+		{buttonText}
+	</span>
+	<span class="indicator-progress">
+		Please wait...
+		<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+	</span>
 </button>
