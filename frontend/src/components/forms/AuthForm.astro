@@ -19,6 +19,9 @@ import UsernameInput from "../ui/UsernameInput.astro";
 
 
 <script>
+
+import { setCookie } from "../../utils/headers";
+
 function sendAuthData() {
 	const formData = new FormData(form);
 
@@ -32,7 +35,12 @@ function sendAuthData() {
 			.then((data) => {
 				document.location.href = "/products"
 
-				document.cookie = `Authorization=Bearer ${data.jwt }`;
+				let date = new Date();
+				date.setDate(date.getDate() + 30);
+
+				setCookie("Authorization", `Bearer ${data.jwt}`, {
+					expires: date
+				})
 			})
 		}
 	})

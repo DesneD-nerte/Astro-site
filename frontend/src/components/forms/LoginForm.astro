@@ -16,6 +16,7 @@ import ValidationButton from "../ui/ValidationButton.astro";
 </form>
 
 <script>
+import { setCookie } from "../../utils/headers";
 
 function sendLoginData() {
     const formData = new FormData();
@@ -37,7 +38,12 @@ function sendLoginData() {
 			.then((data) => {
 				document.location.href = "/products"
 
-				document.cookie = `Authorization=Bearer ${data.jwt }`;
+				let date = new Date();
+				date.setDate(date.getDate() + 30);
+
+				setCookie("Authorization", `Bearer ${data.jwt}`, {
+					expires: date
+				})
 			})
 		}
 	})

@@ -1,13 +1,13 @@
 ---
 import type { User } from "../../types/User";
 
-interface UserDataProps {
+interface Props {
     myData: User,
 }
 
 const { myData } = Astro.props;
 
-const userProducts = JSON.stringify({userId: myData.id, products: myData.Cart.products});
+const userProducts = JSON.stringify({userId: myData.id, products: myData.Cart?.products});
 ---
 
 <input id="user-products-input" class="d-none" type="text" value={userProducts}/>

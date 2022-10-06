@@ -14,7 +14,7 @@ const productsData = await fetch("http://localhost:1337/api/products?populate=*"
     .then((response) => response.json() )
     .then((responseData) => {
         return toCardProps(responseData.data);
-     })
+    })
 ---
 
 <div class="container-sm">

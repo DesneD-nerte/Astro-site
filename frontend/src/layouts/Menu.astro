@@ -19,7 +19,7 @@
         </div>
     
         <div class="menu-item bg-hover-light-info">
-            <a href="login" class="menu-link">
+            <a id="sign-out-link" href="/login" class="menu-link">
                 <span class="menu-icon">
                     <i class="bi bi-box-arrow-right fs-3"></i>
                 </span>
@@ -28,3 +28,17 @@
         </div>
     </div>
 </header>
+
+<script>
+import { deleteCookie } from "../utils/headers"
+
+    const aLink = document.getElementById("sign-out-link") as HTMLAnchorElement;
+
+    aLink.addEventListener("click", function() {
+        signOut();
+    })
+
+    function signOut() {
+        deleteCookie("Authorization");
+    }
+</script>
