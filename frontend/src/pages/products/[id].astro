@@ -22,8 +22,12 @@ const oneProductData = await fetch(`${STRAPI_URL}/api/products/${id}/?populate=*
         Authorization: authorizationCookie.value as string
     }
 })
-.then((response) => response.json() )
+.then((response) => response.json())
 .then((responseData) => responseData.data )
+
+if(!oneProductData) {
+    return Astro.redirect("/products");
+}
 
 const myData: User = await fetch(`${STRAPI_URL}/api/users/me?populate[Cart][populate]=*`, {
     method: "GET",
@@ -31,7 +35,7 @@ const myData: User = await fetch(`${STRAPI_URL}/api/users/me?populate[Cart][popu
         Authorization: authorizationCookie.value as string
     }
 })
-    .then((response) => response.json() )
+    .then((response) => response.json())
     .then((responseData) => responseData )
 ---
 

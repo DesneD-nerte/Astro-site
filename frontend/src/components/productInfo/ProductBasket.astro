@@ -31,15 +31,22 @@ const userProducts = JSON.stringify({userId: myData.id, products: myData.Cart?.p
     function addProduct() {
         const {userId, products} = JSON.parse(cartProductsInput.value);
 
-        const productExisted = products.find((oneProduct: any) => {
-            return (oneProduct.id == idProduct);
-        });
+        if(!products) {
+            const newProductArray = [{id: idProduct}];
+            cartProductsInput.value = JSON.stringify({userId, newProductArray});
+            
+            putProductBasket(userId, newProductArray);
+        } else {
+            const productExisted = products.find((oneProduct: any) => {
+                return (oneProduct.id == idProduct);
+            });
 
-        if(!productExisted) {
-            products.push({id: idProduct});
-            cartProductsInput.value = JSON.stringify({userId, products});
+            if(!productExisted) {
+                products.push({id: idProduct});
+                cartProductsInput.value = JSON.stringify({userId, products});
 
-            putProductBasket(userId, products);
+                putProductBasket(userId, products);
+            }
         }
     }
 

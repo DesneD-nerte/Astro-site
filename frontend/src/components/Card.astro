@@ -43,7 +43,8 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 	import { addListener } from "../utils/socket.io";
 	const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 
-    addListener("productsChanged", async (data: Product) => {
+	addListener("productsChanged", async (responseData: {data: Product}) => {
+		const { data } = responseData;
         const image_Div = document.getElementById(`card-image-${data.id}`) as HTMLDivElement;
         const title_H2 = document.getElementById(`card-title-${data.id}`) as HTMLHeadingElement;
         const price_P = document.getElementById(`card-price-${data.id}`) as HTMLParagraphElement;
@@ -51,12 +52,12 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 		const cardProps = getCardObject(data);
 
 		image_Div.innerHTML = cardProps.image
-			? `<div> <img class=\"w-100 h-100\" src=${STRAPI_URL + cardProps.image[0].url}></div>`
-			: "<p>No image</p>"
-
-		title_H2.textContent = cardProps.title
+			? `<div> <img style="height: 100%; width: 100%" src=${STRAPI_URL + cardProps.image[0].url}></div>`
+			: `<p style="color: #444">No image</p>`;
+		title_H2.textContent = cardProps.title;
 		price_P.textContent = cardProps.price;
     })
+
 </script>
 
 <style>
@@ -87,8 +88,6 @@ const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
 		text-overflow: ellipsis;
 	}
 	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
 		color: #444;
 	}
 	#link-card:is(:hover, :focus-within) {

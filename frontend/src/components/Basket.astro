@@ -23,7 +23,7 @@ const myDataCartProducts = myData.Cart?.products;
 
 <div class="container-sm">
     <div class="row">
-        {myDataCartProducts 
+        {myDataCartProducts && myDataCartProducts.length != 0
             ? myDataCartProducts.map((oneProduct) => {
                 return (
                     <Card id={oneProduct.id}
@@ -33,7 +33,12 @@ const myDataCartProducts = myData.Cart?.products;
                     />
                 )
             })
-            : <div>Basket is empty</div>
+            : <div class="d-flex flex-column flex-center h-300px form-control border-gray-300 shadow-sm">
+                <p class="fs-2">Basket is empty</p>
+                <a href="/products">
+                    <button class="btn btn-primary">Return to products</button>
+                </a>
+            </div>
         }
     </div>
 </div>
