@@ -3,6 +3,11 @@ import Carousel from "../../components/productInfo/Carousel.astro";
 import ProductPanel from "../../components/productInfo/ProductPanel.astro";
 import Layout from "../../layouts/Layout.astro"
 import type { User } from "../../types/User";
+import { getCookie } from "../../utils/headers";
+
+if(!getCookie(Astro.request, "Authorization")) {
+    return Astro.redirect("/login");
+}
 
 const { id } = Astro.params;
 

@@ -2,6 +2,11 @@
 import Products from "../../components/Products.astro";
 import Layout from "../../layouts/Layout.astro"
 import Menu from "../../layouts/Menu.astro";
+import { getCookie } from "../../utils/headers";
+
+if(!getCookie(Astro.request, "Authorization")) {
+    return Astro.redirect("/login");
+}
 
 ---
 
